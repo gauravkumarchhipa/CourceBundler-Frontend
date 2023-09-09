@@ -3,8 +3,8 @@ import React from 'react';
 import { RiDeleteBin7Fill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import { ChangePhotBox } from './ChangePhotBox';
-import { user } from './User'
-const Profile = () => {
+// import { user } from './User'
+const Profile = ({ user }) => {
     const { isOpen, onClose, onOpen } = useDisclosure();
     const removeFromPlaylistHandler = (id) => {
         console.log(id)
@@ -12,7 +12,6 @@ const Profile = () => {
     const changeImageSubmitHandler = (e, image) => {
         e.preventDefault();
     }
-
     return (
         <Container minH={'95vh'} maxW={"container.lg"} py={8}>
             <Heading children="Profile" m={8} textTransform={"uppercase"} />
@@ -24,7 +23,7 @@ const Profile = () => {
                 padding={8}
             >
                 <VStack>
-                    <Avatar boxSize={"44"} />
+                    <Avatar boxSize={"44"} src={user?.avatar?.url} />
                     <Button onClick={onOpen} colorScheme='yellow' variant={"ghost"}>
                         Change Profile Image
                     </Button>
@@ -40,13 +39,13 @@ const Profile = () => {
                     </HStack>{' '}
                     <HStack>
                         <Text children="CreatedAt" fontWeight={'bold'} />
-                        <Text children={user?.createdAt.split("T")[0]} />
+                        <Text children={user?.CreatedAt.split("T")[0]} />
                     </HStack>
                     {(
                         user?.role !== "admin" &&
                         <HStack>
                             <Text children={"Subscription"} fontWeight={'bold'} />
-                            {user?.subscription?.status === "active" ? (
+                            {user?.subscription && user?.subscription?.status === "active" ? (
                                 <Button color={'yellow.500'} variant={'unstyled'}>Cancel subscription</Button>
                             ) : (
                                 <Link to="/subscribe">
