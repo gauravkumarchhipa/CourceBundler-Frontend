@@ -76,4 +76,55 @@ export const userReducer = createReducer(
         clearMessage: (state) => {
             state.message = null;
         }
-    });
+    }
+);
+
+export const profileReducer = createReducer({}, {
+    // profile update
+    updateProfileRequest: (state) => {
+        state.loading = true;
+    },
+    updateProfileSuccess: (state, action) => {
+        state.loading = false;
+        state.message = action.payload;
+    },
+    updateProfileFail: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
+
+    // change password
+    changePasswordRequest: (state) => {
+        state.loading = true;
+    },
+    changePasswordSuccess: (state, action) => {
+        state.loading = false;
+        state.message = action.payload;
+    },
+    changePasswordFail: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
+    // update profile picture
+    updateProfilePictureRequest: (state) => {
+        state.loading = true;
+    },
+    updateProfilePictureSuccess: (state, action) => {
+        state.loading = false;
+        state.message = action.payload;
+    },
+    updateProfilePictureFail: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
+
+    // clear Error
+    clearError: (state) => {
+        state.error = null;
+    },
+
+    // clear message
+    clearMessage: (state) => {
+        state.message = null;
+    }
+});
