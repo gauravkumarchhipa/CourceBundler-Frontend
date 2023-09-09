@@ -4,18 +4,21 @@ import { Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay,
 import { RiDashboard2Fill, RiLogoutBoxLine, RiMenu5Fill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import { LinkButton } from './LinkButton'
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../redux/Actions/user';
 
-const Header = () => {
+const Header = ({ isAuthenticated = false, user }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const dispatch = useDispatch();
 
-    const isAuthenticated = false;
-    const user = {
-        role: 'admin',
-    }
+    // const isAuthenticated = false;
+    // const user = {
+    //     role: 'admin',
+    // }
 
     const logoutHandler = () => {
         onClose()
-        console.log("Logout")
+        dispatch(logout());
     }
     return (
         <>

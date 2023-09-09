@@ -1,7 +1,7 @@
 import { Box, Button, Container, FormLabel, Heading, Input, VStack } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import { login } from '../../redux/actions/user';
+import { login } from '../../redux/Actions/user';
 import { useDispatch } from 'react-redux';
 const Login = () => {
     const [email, setEmail] = useState('');
