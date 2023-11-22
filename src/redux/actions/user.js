@@ -23,7 +23,7 @@ export const login = (email, password) => async dispatch => {
     }
 };
 
-// User Login
+// User Register
 export const register = (formdata) => async dispatch => {
     try {
         dispatch({ type: 'registerRequest' });
