@@ -4,15 +4,26 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile } from '../../redux/actions/profile';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 const UpdateProfile = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const dispatch = useDispatch();
+  const { loading, message, error } = useSelector(state => state.profile);
+  const { profileUpdateRedirect } = useSelector(
+    state => state.profile
+  )
   const handleSubmit = e => {
     e.preventDefault();
     dispatch(updateProfile(name, email));
   };
-  const { loading, message, error } = useSelector(state => state.profile);
+  useEffect(() => {
+    if (profileUpdateRedirect) {
+      navigate('/profile');
+    }
+  }, [profileUpdateRedirect, navigate])
+  console.log(profileUpdateRedirect)
 
   useEffect(() => {
     if (error) {

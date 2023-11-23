@@ -83,28 +83,35 @@ export const profileReducer = createReducer({}, {
     // profile update
     updateProfileRequest: (state) => {
         state.loading = true;
+        state.profileUpdateRedirect = false;
     },
     updateProfileSuccess: (state, action) => {
         state.loading = false;
         state.message = action.payload;
+        state.profileUpdateRedirect = true;
     },
     updateProfileFail: (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        state.profileUpdateRedirect = false;
     },
 
     // change password
     changePasswordRequest: (state) => {
         state.loading = true;
+        state.profileUpdateRedirect = false;
     },
     changePasswordSuccess: (state, action) => {
         state.loading = false;
         state.message = action.payload;
+        state.profileUpdateRedirect = true;
     },
     changePasswordFail: (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        state.profileUpdateRedirect = true;
     },
+
     // update profile picture
     updateProfilePictureRequest: (state) => {
         state.loading = true;
@@ -126,5 +133,6 @@ export const profileReducer = createReducer({}, {
     // clear message
     clearMessage: (state) => {
         state.message = null;
+        state.profileUpdateRedirect = false;
     }
 });

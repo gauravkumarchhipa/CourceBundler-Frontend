@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { changePassword } from '../../redux/actions/profile';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const ChangePassword = () => {
+  const navigate = useNavigate();
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const dispatch = useDispatch();
@@ -12,7 +14,13 @@ const ChangePassword = () => {
     e.preventDefault();
     dispatch(changePassword(oldPassword, newPassword));
   };
-  const { loading, message, error } = useSelector(state => state.profile);
+  const { loading, message, error, profileUpdateRedirect } = useSelector(state => state.profile);
+
+  useEffect(() => {
+    if (profileUpdateRedirect) {
+      navigate('/profile');
+    }
+  }, [profileUpdateRedirect, navigate])
 
   useEffect(() => {
     if (error) {
