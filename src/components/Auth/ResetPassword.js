@@ -1,19 +1,21 @@
 import { Button, Container, Heading, Input, VStack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast';
 import { resetPassword } from '../../redux/actions/profile';
 
 const ResetPassword = () => {
     const [password, setPassword] = useState('');
     const params = useParams();
-    console.log(params)
+    console.log(params.token)
     const dispatch = useDispatch();
     const { error, message, loading } = useSelector(state => state.profile);
+    const navigate = useNavigate();
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(resetPassword(password))
+        dispatch(resetPassword(params.token, password))
+        navigate('/login')
     }
 
     useEffect(() => {
