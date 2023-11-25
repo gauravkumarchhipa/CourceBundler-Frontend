@@ -67,6 +67,20 @@ export const userReducer = createReducer(
             state.error = action.payload;
         },
 
+        // update profile picture
+        updateProfilePictureRequest: (state) => {
+            state.loading = true;
+        },
+        updateProfilePictureSuccess: (state, action) => {
+            state.loading = false;
+            state.message = action.payload;
+        },
+        updateProfilePictureFail: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
+
+
         // clear Error
         clearError: (state) => {
             state.error = null;
@@ -83,44 +97,51 @@ export const profileReducer = createReducer({}, {
     // profile update
     updateProfileRequest: (state) => {
         state.loading = true;
-        state.profileUpdateRedirect = false;
     },
     updateProfileSuccess: (state, action) => {
         state.loading = false;
         state.message = action.payload;
-        state.profileUpdateRedirect = true;
     },
     updateProfileFail: (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        state.profileUpdateRedirect = false;
     },
 
     // change password
     changePasswordRequest: (state) => {
         state.loading = true;
-        state.profileUpdateRedirect = false;
     },
     changePasswordSuccess: (state, action) => {
         state.loading = false;
         state.message = action.payload;
-        state.profileUpdateRedirect = true;
     },
     changePasswordFail: (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        state.profileUpdateRedirect = false;
     },
 
-    // update profile picture
-    updateProfilePictureRequest: (state) => {
+    // forget password
+    forgetPasswordRequest: (state) => {
         state.loading = true;
     },
-    updateProfilePictureSuccess: (state, action) => {
+    forgetPasswordSuccess: (state, action) => {
         state.loading = false;
         state.message = action.payload;
     },
-    updateProfilePictureFail: (state, action) => {
+    forgetPasswordFail: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
+
+    // reset password
+    resetPasswordRequest: (state) => {
+        state.loading = true;
+    },
+    resetPasswordSuccess: (state, action) => {
+        state.loading = false;
+        state.message = action.payload;
+    },
+    resetPasswordFail: (state, action) => {
         state.loading = false;
         state.error = action.payload;
     },
@@ -133,6 +154,5 @@ export const profileReducer = createReducer({}, {
     // clear message
     clearMessage: (state) => {
         state.message = null;
-        state.profileUpdateRedirect = false;
     }
 });

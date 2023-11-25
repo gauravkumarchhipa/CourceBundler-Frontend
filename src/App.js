@@ -85,12 +85,29 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/forgetpassword" element={<ForgetPassword />} />
+            <Route
+              path="/forgetpassword"
+              element={
+                <ProtectedRoute
+                  isAuthenticated={!isAuthenticated}
+                  redirect={'/profile'}
+                >
+                  <ForgetPassword />
+                </ProtectedRoute>
+              }
+            />
+
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
             <Route path="/request" element={<Request />} />
             <Route path="/courses" element={<Courses />} />
-            <Route path="/courses/:id" element={<CoursePage />} />
+            <Route path="/courses/:id" element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+              >
+                <CoursePage />
+              </ProtectedRoute>}
+            />
             <Route
               path="/subscribe"
               element={
@@ -197,8 +214,9 @@ function App() {
           <Footer />
           <Toaster />
         </>
-      )}
-    </Router>
+      )
+      }
+    </Router >
   );
 }
 export default App;
