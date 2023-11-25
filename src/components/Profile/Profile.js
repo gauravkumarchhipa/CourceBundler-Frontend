@@ -14,21 +14,39 @@ import React from 'react';
 import { RiDeleteBin7Fill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import { ChangePhotBox } from './ChangePhotBox';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateProfilePicture } from '../../redux/actions/profile';
-// import { user } from './User'
+import { loadUser } from '../../redux/actions/user';
+import { toast } from 'react-hot-toast';
+import { useEffect } from 'react';
 const Profile = ({ user }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const dispatch = useDispatch();
+  const { loading, message, error } = useSelector(state => state.profile);
   const removeFromPlaylistHandler = id => {
     console.log(id);
   };
-  const changeImageSubmitHandler = (e, image) => {
+  useEffect(() => {
+    if (message) {
+      toast.success(message);
+      setTimeout(() => {
+        dispatch({ type: 'clearMessage' });
+      }, 1000);
+    }
+    if (error) {
+      toast.error(error);
+      setTimeout(() => {
+        dispatch({ type: 'clearError' });
+      }, 1000);
+    }
+  }, [message, dispatch, error]);
+
+  const changeImageSubmitHandler = async (e, image) => {
     e.preventDefault();
     const myForm = new FormData();
     myForm.append('file', image);
-
-    dispatch(updateProfilePicture(myForm));
+    await dispatch(updateProfilePicture(myForm));
+    dispatch(loadUser());
   };
   return (
     <Container minH={'95vh'} maxW={'container.lg'} py={8}>
@@ -116,6 +134,7 @@ const Profile = ({ user }) => {
         isOpen={isOpen}
         onClose={onClose}
         changeImageSubmitHandler={changeImageSubmitHandler}
+        loading={loading}
       />
     </Container>
   );

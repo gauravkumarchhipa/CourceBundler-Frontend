@@ -2,34 +2,30 @@ import { Button, Container, Heading, Input, VStack } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { changePassword } from '../../redux/actions/profile';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 const ChangePassword = () => {
   const navigate = useNavigate();
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const dispatch = useDispatch();
-  const handleSubmit = e => {
+  const { loading, message, error } = useSelector(state => state.profile);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(changePassword(oldPassword, newPassword));
+    await dispatch(changePassword(oldPassword, newPassword));
+    navigate('/profile');
   };
-  const { loading, message, error, profileUpdateRedirect } = useSelector(state => state.profile);
 
   useEffect(() => {
-    if (profileUpdateRedirect) {
-      navigate('/profile');
-    }
-  }, [profileUpdateRedirect, navigate])
-
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-      dispatch({ type: 'clearError' });
-    }
     if (message) {
       toast.success(message);
       dispatch({ type: 'clearMessage' });
+    }
+    if (error) {
+      toast.error(error);
+      dispatch({ type: 'clearError' });
     }
   }, [loading, message, dispatch, error]);
   return (

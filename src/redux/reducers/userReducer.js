@@ -109,7 +109,7 @@ export const profileReducer = createReducer({}, {
     changePasswordFail: (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        state.profileUpdateRedirect = true;
+        state.profileUpdateRedirect = false;
     },
 
     // update profile picture

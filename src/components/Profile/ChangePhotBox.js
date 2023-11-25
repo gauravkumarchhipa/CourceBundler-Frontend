@@ -1,7 +1,7 @@
 import { Avatar, Button, Container, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { fileUploadCss } from '../Auth/Register';
-export function ChangePhotBox({ isOpen, onClose, changeImageSubmitHandler }) {
+export function ChangePhotBox({ isOpen, onClose, changeImageSubmitHandler, loading }) {
     const [image, setImage] = useState('');
     const [imagePrev, setImagePrev] = useState('');
     const changeImage = (e) => {
@@ -37,7 +37,7 @@ export function ChangePhotBox({ isOpen, onClose, changeImageSubmitHandler }) {
                                 />
 
                                 <Button
-                                    // isLoading={loading}
+                                    isLoading={loading}
                                     w="full"
                                     colorScheme={'yellow'}
                                     type="submit"
