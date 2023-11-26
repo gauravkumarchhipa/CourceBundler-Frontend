@@ -30,15 +30,11 @@ const Profile = ({ user }) => {
   useEffect(() => {
     if (message) {
       toast.success(message);
-      setTimeout(() => {
-        dispatch({ type: 'clearMessage' });
-      }, 1000);
+      dispatch({ type: 'clearMessage' });
     }
     if (error) {
       toast.error(error);
-      setTimeout(() => {
-        dispatch({ type: 'clearError' });
-      }, 1000);
+      dispatch({ type: 'clearError' });
     }
   }, [message, dispatch, error]);
 

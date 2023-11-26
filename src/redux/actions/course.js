@@ -1,7 +1,7 @@
 import { server } from '../store';
 import axios from 'axios';
 
-// User updateprofile
+// get All COurce List
 export const getAllCourse = (category = "", keyword = "") => async dispatch => {
     try {
         dispatch({ type: 'allCourseRequest' });

@@ -1,6 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { profileReducer, userReducer } from './reducers/userReducer';
+import { userReducer } from './reducers/userReducer';
+import { profileReducer } from './reducers/profileReducer';
 import { courseReducer } from './reducers/courseReducer';
+import { subsriptionReducer } from './reducers/subsription';
 export const server =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:4000/api/v1'
@@ -10,7 +12,8 @@ const store = configureStore({
   reducer: {
     user: userReducer,
     profile: profileReducer,
-    course: courseReducer
+    course: courseReducer,
+    subscription: subsriptionReducer
   },
 });
 
