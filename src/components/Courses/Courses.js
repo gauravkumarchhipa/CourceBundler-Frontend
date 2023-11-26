@@ -21,6 +21,10 @@ const Courses = () => {
     }
     useEffect(() => {
         dispatch(getAllCourse(category, keyword));
+
+    }, [dispatch, category, keyword,]);
+
+    useEffect(() => {
         if (error) {
             toast.error(error);
             dispatch({ type: 'clearError' })
@@ -30,7 +34,7 @@ const Courses = () => {
             toast.success(message);
             dispatch({ type: 'clearMessage' })
         }
-    }, [dispatch, category, keyword, error, message]);
+    }, [error, message, dispatch])
 
     return (
         <Container minH={'95vh'} maxW={"container.lg"} paddingY={8}>
