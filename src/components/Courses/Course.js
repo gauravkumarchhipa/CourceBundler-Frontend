@@ -1,6 +1,6 @@
 import { Button, HStack, Heading, Image, Stack, Text, VStack } from "@chakra-ui/react"
 import { Link } from 'react-router-dom'
-export const Course = ({ views, title, imageSrc, id, addToPlaylistHandler, creator, description, lectureCount }) => {
+export const Course = ({ views, title, imageSrc, id, addToPlaylistHandler, creator, description, lectureCount, loading }) => {
     return (
         <VStack className='course' alignItems={['center', 'flex-start']}>
             <Image src={imageSrc} boxSize={"60"} objectFit={'contain'} />
@@ -16,7 +16,7 @@ export const Course = ({ views, title, imageSrc, id, addToPlaylistHandler, creat
                 <Link to={`/courses/${id}`}>
                     <Button colorScheme='yellow'>Watch Now</Button>
                 </Link>
-                <Button variant={'ghost'} colorScheme='yellow' onClick={() => addToPlaylistHandler(id)}>Add to playList</Button>
+                <Button isLoading={loading} variant={'ghost'} colorScheme='yellow' onClick={() => addToPlaylistHandler(id)}>Add to playList</Button>
             </Stack>
         </VStack>
     )

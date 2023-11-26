@@ -1,17 +1,37 @@
 import { Button, Container, HStack, Heading, Input, Stack, Text } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Course } from './Course';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllCourse } from '../../redux/actions/course';
+import toast from 'react-hot-toast';
+import { addToPlaylist } from '../../redux/actions/profile';
+import { loadUser } from '../../redux/actions/user';
 
 const Courses = () => {
     const [keyword, setKeyword] = useState("");
     const [category, setCategory] = useState("");
-    console.log(category);
+    const dispatch = useDispatch();
+    const { loading, courses, error, message } = useSelector(state => state.course)
     const categories = [
         "web development", "Artificial Intellegence", "Data Structure & Algorithm", "App Development", "Data Science", "Game Developement"
     ];
-    const addToPlaylistHandler = () => {
-        console.log("Add to playList")
+    const addToPlaylistHandler = async (courseId) => {
+        await dispatch(addToPlaylist(courseId));
+        dispatch(loadUser());
     }
+    useEffect(() => {
+        dispatch(getAllCourse(category, keyword));
+        if (error) {
+            toast.error(error);
+            dispatch({ type: 'clearError' })
+        }
+
+        if (message) {
+            toast.success(message);
+            dispatch({ type: 'clearMessage' })
+        }
+    }, [dispatch, category, keyword, error, message]);
+
     return (
         <Container minH={'95vh'} maxW={"container.lg"} paddingY={8}>
             <Heading children="All Courses" m={8} />
@@ -40,16 +60,26 @@ const Courses = () => {
                 justifyContent={["flex-start", "space-evenly"]}
                 alignItems={['center', 'flex-start']}
             >
-                <Course
-                    title={"Sample"}
-                    description={"Sample"}
-                    views={23}
-                    imageSrc={"https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg"}
-                    id={"sample"}
-                    creator={"Sample boy"}
-                    lectureCount={2}
-                    addToPlaylistHandler={addToPlaylistHandler}
-                />
+                {
+                    courses?.length > 0 ?
+                        courses?.map((data) => (
+                            <Course
+                                key={data?._id}
+                                title={data?.title}
+                                description={data?.description}
+                                views={data?.views}
+                                imageSrc={data?.poster.url}
+                                id={data?._id}
+                                creator={data?.createdBy}
+                                lectureCount={data?.numOfVideos}
+                                addToPlaylistHandler={addToPlaylistHandler}
+                                loading={loading}
+                            />
+                        ))
+                        :
+                        <Heading children="Course Not Found" mt={4} />
+                }
+
             </Stack>
         </Container>
     )

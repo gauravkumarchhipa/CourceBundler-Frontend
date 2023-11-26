@@ -111,3 +111,47 @@ export const resetPassword = (token, password) => async dispatch => {
         dispatch({ type: 'resetPasswordFail', payload: error?.response?.data?.message });
     }
 };
+
+// Add to playlist
+export const addToPlaylist = (id) => async dispatch => {
+    try {
+        dispatch({ type: 'addToPlaylistRequest' });
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+            },
+            withCredentials: true,
+        }
+        const { data } = await axios.post(
+            `${server}/addtoplaylist`,
+            {
+                id
+            },
+            config
+        );
+
+        dispatch({ type: 'addToPlaylistSuccess', payload: data?.message });
+    } catch (error) {
+        console.log(error, "error");
+        dispatch({ type: 'addToPlaylistFail', payload: error?.response?.data?.message });
+    }
+};
+
+// Remove playlist
+export const removePlaylist = (id) => async dispatch => {
+    try {
+        dispatch({ type: 'removePlaylistRequest' });
+        const config = {
+            withCredentials: true,
+        }
+        const { data } = await axios.delete(
+            `${server}/removefromplaylist?id=${id}`,
+            config
+        );
+
+        dispatch({ type: 'removePlaylistSuccess', payload: data?.message });
+    } catch (error) {
+        console.log(error, "error");
+        dispatch({ type: 'removePlaylistFail', payload: error?.response?.data?.message });
+    }
+};

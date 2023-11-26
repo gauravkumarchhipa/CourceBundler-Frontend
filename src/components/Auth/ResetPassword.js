@@ -8,7 +8,6 @@ import { resetPassword } from '../../redux/actions/profile';
 const ResetPassword = () => {
     const [password, setPassword] = useState('');
     const params = useParams();
-    console.log(params.token)
     const dispatch = useDispatch();
     const { error, message, loading } = useSelector(state => state.profile);
     const navigate = useNavigate();

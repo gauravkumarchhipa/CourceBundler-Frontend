@@ -15,7 +15,7 @@ import { RiDeleteBin7Fill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import { ChangePhotBox } from './ChangePhotBox';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateProfilePicture } from '../../redux/actions/profile';
+import { removePlaylist, updateProfilePicture } from '../../redux/actions/profile';
 import { loadUser } from '../../redux/actions/user';
 import { toast } from 'react-hot-toast';
 import { useEffect } from 'react';
@@ -23,8 +23,9 @@ const Profile = ({ user }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const dispatch = useDispatch();
   const { loading, message, error } = useSelector(state => state.profile);
-  const removeFromPlaylistHandler = id => {
-    console.log(id);
+  const removeFromPlaylistHandler = async (id) => {
+    await dispatch(removePlaylist(id));
+    dispatch(loadUser());
   };
   useEffect(() => {
     if (message) {
@@ -122,7 +123,7 @@ const Profile = ({ user }) => {
                     Watch Now
                   </Button>
                 </Link>
-                <Button onClick={() => removeFromPlaylistHandler(data?.course)}>
+                <Button isLoading={loading} onClick={() => removeFromPlaylistHandler(data?.course)}>
                   <RiDeleteBin7Fill />
                 </Button>
               </HStack>
