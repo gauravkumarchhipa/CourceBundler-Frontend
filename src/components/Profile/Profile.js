@@ -19,10 +19,12 @@ import { removePlaylist, updateProfilePicture } from '../../redux/actions/profil
 import { loadUser } from '../../redux/actions/user';
 import { toast } from 'react-hot-toast';
 import { useEffect } from 'react';
+import { cancelSubscription } from '../../redux/actions/subscription';
 const Profile = ({ user }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const dispatch = useDispatch();
   const { loading, message, error } = useSelector(state => state.profile);
+  const { loading: subscriptionLoading, message: subscriptionMessage, error: subscriptionError } = useSelector(state => state.subscription);
   const removeFromPlaylistHandler = async (id) => {
     await dispatch(removePlaylist(id));
     dispatch(loadUser());
@@ -36,7 +38,17 @@ const Profile = ({ user }) => {
       toast.error(error);
       dispatch({ type: 'clearError' });
     }
-  }, [message, dispatch, error]);
+
+    if (subscriptionMessage) {
+      toast.success(subscriptionMessage);
+      dispatch({ type: 'clearMessage' });
+      dispatch(loadUser());
+    }
+    if (subscriptionError) {
+      toast.error(subscriptionError);
+      dispatch({ type: 'clearError' });
+    }
+  }, [message, dispatch, error, subscriptionMessage, subscriptionError]);
 
   const changeImageSubmitHandler = async (e, image) => {
     e.preventDefault();
@@ -45,6 +57,10 @@ const Profile = ({ user }) => {
     await dispatch(updateProfilePicture(myForm));
     dispatch(loadUser());
   };
+
+  const cancelSubscriptionHandler = async () => {
+    await dispatch(cancelSubscription());
+  }
   return (
     <Container minH={'95vh'} maxW={'container.lg'} py={8}>
       <Heading children="Profile" m={8} textTransform={'uppercase'} />
@@ -78,7 +94,7 @@ const Profile = ({ user }) => {
             <HStack>
               <Text children={'Subscription'} fontWeight={'bold'} />
               {user?.subscription && user?.subscription?.status === 'active' ? (
-                <Button color={'yellow.500'} variant={'unstyled'}>
+                <Button isLoading={subscriptionLoading} color={'yellow.500'} variant={'unstyled'} onClick={cancelSubscriptionHandler}>
                   Cancel subscription
                 </Button>
               ) : (

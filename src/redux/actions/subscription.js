@@ -20,13 +20,12 @@ export const buySubscription = (id) => async dispatch => {
 };
 
 // cancel Subscription
-export const cancelSubscription = (id) => async dispatch => {
+export const cancelSubscription = () => async dispatch => {
     try {
         dispatch({ type: 'cancelSubscriptionRequest' });
 
         const { data } = await axios.delete(
             `${server}/subscribe/cancel`,
-            { id },
             {
                 withCredentials: true,
             }
