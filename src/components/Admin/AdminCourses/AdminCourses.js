@@ -1,34 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import cursor from '../../../assets/images/cursor.png'
 import Sidebar from '../Sidebar';
 import { Box, Button, Grid, HStack, Heading, Image, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react';
 import { RiDeleteBin7Fill } from 'react-icons/ri';
 import CourseModal from './CourseModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllCourse } from '../../../redux/actions/course';
 const AdminCourses = () => {
     const { isOpen, onClose, onOpen } = useDisclosure();
-    const courses = [
-        {
-            _id: "id1",
-            title: "React Course",
-            category: "web developmnet",
-            poster: {
-                url: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg"
-            },
-            createdBy: "dev guru",
-            views: 123,
-            numOfVideos: 12
-        }, {
-            _id: "id2",
-            title: "Nextjs Course",
-            category: "web developmnet",
-            poster: {
-                url: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg"
-            },
-            createdBy: "dev guru",
-            views: 123,
-            numOfVideos: 12
-        }
-    ];
+    const { courses } = useSelector(state => state.course);
+    const dispatch = useDispatch();
+
     const courseDetailsHandler = (id) => {
         onOpen();
         console.log(id)
@@ -44,6 +26,10 @@ const AdminCourses = () => {
     const addLectureHandler = (e, courseId, title, description, video) => {
         e.preventDefault();
     }
+
+    useEffect(() => {
+        dispatch(getAllCourse());
+    }, [dispatch])
 
     return (
         <Grid
