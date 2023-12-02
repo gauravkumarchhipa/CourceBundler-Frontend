@@ -105,7 +105,7 @@ function App() {
               <ProtectedRoute
                 isAuthenticated={isAuthenticated}
               >
-                <CoursePage />
+                <CoursePage user={user} />
               </ProtectedRoute>}
             />
             <Route
@@ -204,7 +204,7 @@ function App() {
                 <ProtectedRoute
                   adminRoute={true}
                   isAuthenticated={isAuthenticated}
-                  isAdmin={user && user.role === 'admin'}
+                  isAdmin={user && user?.role === 'admin'}
                 >
                   <Users />
                 </ProtectedRoute>

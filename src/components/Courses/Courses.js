@@ -42,7 +42,7 @@ const Courses = () => {
             <Input
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
-                placeholder='Searcg a course...'
+                placeholder='Search a course...'
                 type={'text'}
                 focusBorderColor="yellow.500"
             />
