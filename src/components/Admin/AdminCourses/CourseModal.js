@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { RiDeleteBin7Fill } from 'react-icons/ri';
 import { fileUploadCss } from '../../Auth/Register';
 
-const CourseModal = ({ isOpen, onClose, id, deleteButtonHandler, addLectureHandler, courseTitle, lectures = [1, 2, 3, 4, 5, 6] }) => {
+const CourseModal = ({ isOpen, onClose, id, deleteButtonHandler, addLectureHandler, courseTitle, lectures = [], loading }) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [video, setVideo] = useState("");
@@ -43,12 +43,13 @@ const CourseModal = ({ isOpen, onClose, id, deleteButtonHandler, addLectureHandl
                             {lectures?.map((item, i) => (
                                 <VideoCard
                                     key={i}
-                                    title={"React Intro"}
-                                    description={"THis is a intro lecture, where you will know the basic of react"}
+                                    title={item?.title}
+                                    description={item?.description}
                                     num={i + 1}
-                                    lectureId={"lectureid1"}
+                                    lectureId={item?._id}
                                     courseId={id}
                                     deleteButtonHandler={deleteButtonHandler}
+                                    loading={loading}
                                 />
                             ))}
                         </Box>
@@ -86,7 +87,7 @@ const CourseModal = ({ isOpen, onClose, id, deleteButtonHandler, addLectureHandl
                                             <video controlsList='nodownload' controls src={videoPrev}></video>
                                         )
                                     }
-                                    <Button colorScheme={'purple'} type='submit'>Upload</Button>
+                                    <Button isLoading={loading} colorScheme={'purple'} type='submit'>Upload</Button>
                                 </VStack>
                             </form>
                         </Box>
@@ -102,7 +103,7 @@ const CourseModal = ({ isOpen, onClose, id, deleteButtonHandler, addLectureHandl
 
 export default CourseModal
 
-function VideoCard({ title, description, num, lectureId, courseId, deleteButtonHandler }) {
+function VideoCard({ title, description, num, lectureId, courseId, deleteButtonHandler, loading }) {
     return (
         <Stack
             direction={["column", "row"]}
@@ -116,7 +117,7 @@ function VideoCard({ title, description, num, lectureId, courseId, deleteButtonH
                 <Heading size={"sm"} children={`#${num} ${title}`} />
                 <Text children={description} />
             </Box>
-            <Button color={"purple.600"} onClick={() => { deleteButtonHandler(courseId, lectureId) }}>
+            <Button isLoading={loading} color={"purple.600"} onClick={() => { deleteButtonHandler(courseId, lectureId) }}>
                 <RiDeleteBin7Fill />
             </Button>
         </Stack>

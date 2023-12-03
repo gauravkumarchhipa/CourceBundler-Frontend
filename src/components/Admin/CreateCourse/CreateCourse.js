@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { createCourse } from '../../../redux/actions/admin';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 const CreateCourse = () => {
     const [title, setTitle] = useState();
     const [description, setDescription] = useState();
@@ -16,17 +17,21 @@ const CreateCourse = () => {
     const [imagePrev, setImagePrev] = useState();
     const dispatch = useDispatch();
     const { loading, error, message } = useSelector(state => state.admin);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (message) {
             toast.success(message);
             dispatch({ type: 'clearMessage' });
+            setTimeout(() => {
+                navigate('/admin/courses');
+            }, 1000);
         }
         if (error) {
             toast.error(error);
             dispatch({ type: 'clearError' });
         }
-    }, [error, message, dispatch]);
+    }, [error, message, dispatch, navigate]);
     const categories = [
         "web development", "Artificial Intellegence", "Data Structure & Algorithm", "App Development", "Data Science", "Game Developement"
     ];
