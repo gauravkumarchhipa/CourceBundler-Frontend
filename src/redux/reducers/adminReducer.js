@@ -3,6 +3,67 @@ import { createReducer } from "@reduxjs/toolkit";
 export const adminReducer = createReducer(
     {},
     {
+        // Get admin state
+        getAdminStateRequest: (state) => {
+            state.loading = true;
+        },
+        getAdminStateSuccess: (state, action) => {
+            state.loading = false;
+            state.stats = action.payload.stats;
+            state.usersCount = action.payload.usersCount;
+            state.subscriptionCount = action.payload.subscriptionCount;
+            state.viewsCount = action.payload.viewsCount;
+            state.subscriptionPercentage = action.payload.subscriptionPercentage;
+            state.viewsPercentage = action.payload.viewsPercentage;
+            state.usersPercentage = action.payload.usersPercentage;
+            state.subscriptionProfit = action.payload.subscriptionProfit;
+            state.viewsProfit = action.payload.viewsProfit;
+            state.usersProfit = action.payload.usersProfit;
+        },
+        getAdminStatefail: (state, action) => {
+            state.loading = false;
+            state.error = action.payload
+        },
+
+        // Get All users
+        getAllUsersRequest: (state) => {
+            state.loading = true;
+        },
+        getAllUsersSuccess: (state, action) => {
+            state.loading = false;
+            state.users = action.payload;
+        },
+        getAllUsersfail: (state, action) => {
+            state.loading = false;
+            state.error = action.payload
+        },
+
+        // Delete users
+        deleteUsersRequest: (state) => {
+            state.loading = true;
+        },
+        deleteUsersSuccess: (state, action) => {
+            state.loading = false;
+            state.message = action.payload;
+        },
+        deleteUsersfail: (state, action) => {
+            state.loading = false;
+            state.error = action.payload
+        },
+
+        // update user role
+        updateUserRoleRequest: (state) => {
+            state.loading = true;
+        },
+        updateUserRoleSuccess: (state, action) => {
+            state.loading = false;
+            state.message = action.payload;
+        },
+        updateUserRolefail: (state, action) => {
+            state.loading = false;
+            state.error = action.payload
+        },
+
         // create Course
         createCourseRequest: (state) => {
             state.loading = true;
