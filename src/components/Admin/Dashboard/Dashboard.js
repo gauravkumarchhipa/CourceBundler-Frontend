@@ -31,7 +31,7 @@ const Dashboard = () => {
             minH={"100vh"}
             templateColumns={['1fr', '5fr 1fr']}
         >{
-                loading ? <Loader color='purple.500' /> :
+                loading || !stats ? <Loader color='purple.500' /> :
                     <Box boxSizing='border-box' py="16" px={['4', 0]}>
                         <Text textAlign={"center"} opacity={0.5} children={`Last change was on ${String(new Date(stats[11].createdAt)).split('G')[0]}`} />
                         <Heading
